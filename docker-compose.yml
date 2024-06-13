@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  php:
+    container_name: php-apache
+    image: php:8.0-apache
+    build: ./web
+    restart: always
+    environment:
+      DB_ADDR: database #DB container_name
+      DB_PASSWORD: root #DB container root password
+      DB_USER: root
+    ports:
+      - 80:80
+    expose:
+      - 3306
+    networks:
+      - db_network
+  db:
+    container_name: database
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    expose:
+      - 3306
+    networks:
+      - db_network
+    volumes:
+      - "./sql/bd.sql:/docker-entrypoint-initdb.d/bd.sql"
+
+networks:
+  db_network:
+    driver: bridge

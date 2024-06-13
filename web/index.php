@@ -1,8 +1,8 @@
 <?php
 // Conectar ao MySQL
-$servername = "localhost";
-$username = "root";
-$password = "";
+$servername = getenv("DB_ADDR");
+$username = getenv("DB_USER");
+$password = getenv("DB_PASSWORD");
 $dbname = "animaisdb";
 
 // Criar a conexão
